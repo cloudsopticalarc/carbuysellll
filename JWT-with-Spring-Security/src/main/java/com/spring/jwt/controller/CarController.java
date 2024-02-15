@@ -93,6 +93,7 @@ CarController {
 
             CarDto car = iCarRegister.findById(car_id);
 
+
             responseSingleCarDto.setObject(car);
             return ResponseEntity.status(HttpStatus.OK).body(responseSingleCarDto);
         }catch (CarNotFoundException carNotFoundException){
