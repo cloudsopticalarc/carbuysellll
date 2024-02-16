@@ -20,6 +20,7 @@ public class AccountController {
 
     private final UserService userService;
 
+
     @PostMapping("/register")
     public ResponseEntity<BaseResponseDTO> register(@RequestBody RegisterDto registerDto){
 
