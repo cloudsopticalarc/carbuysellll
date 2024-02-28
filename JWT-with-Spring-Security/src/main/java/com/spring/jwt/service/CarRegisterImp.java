@@ -5,7 +5,9 @@ import com.spring.jwt.dto.CarDto;
 import com.spring.jwt.dto.FilterDto;
 import com.spring.jwt.entity.Car;
 import com.spring.jwt.entity.Dealer;
+import com.spring.jwt.entity.Status;
 import com.spring.jwt.exception.CarNotFoundException;
+import com.spring.jwt.exception.DealerNotFoundException;
 import com.spring.jwt.exception.PageNotFoundException;
 import com.spring.jwt.repository.CarRepo;
 import com.spring.jwt.repository.DealerRepository;
@@ -25,8 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class
-CarRegisterImp implements ICarRegister {
+public class CarRegisterImp implements ICarRegister {
     @Autowired
     private CarRepo carRepo;
     @Autowired
@@ -268,6 +269,7 @@ CarRegisterImp implements ICarRegister {
 
     }
 
+
     private CarDto convertToDto(Car car) {
         CarDto carDto = new CarDto();
         carDto.setCarId(car.getId());
@@ -298,4 +300,45 @@ CarRegisterImp implements ICarRegister {
         // Map other properties of the Car entity to corresponding properties of CarDto
         return carDto;
     }
+    public List<CarDto> getDetails(int dealerId, Status carStatus, int pageNo) {
+        if (!dealerExists(dealerId)) {
+            throw new DealerNotFoundException("Dealer not found by id");
+        }
+        String statusString = carStatus.getStatus();
+
+        List<Car> listOfCar = carRepo.findByDealerIdAndCarStatus(dealerId, statusString);
+
+        if ((pageNo * 10) > listOfCar.size() - 1) {
+            throw new PageNotFoundException("page not found");
+        }
+        if (listOfCar.size() <= 0) {
+            throw new CarNotFoundException("car not found", HttpStatus.NOT_FOUND);
+        }
+
+        List<CarDto> listOfCarDto = new ArrayList<>();
+
+        int pageStart = pageNo * 10;
+        int pageEnd = pageStart + 10;
+        int diff = (listOfCar.size()) - pageStart;
+        for (int counter = pageStart, i = 1; counter < pageEnd; counter++, i++) {
+            if (pageStart > listOfCar.size()) {
+                break;
+            }
+
+            CarDto carDto = new CarDto(listOfCar.get(counter));
+            carDto.setCarId(listOfCar.get(counter).getId());
+            listOfCarDto.add(carDto);
+            if (diff == i) {
+                break;
+            }
+        }
+
+        return listOfCarDto;
+    }
+
+    private boolean dealerExists(int dealerId) {
+        return dealerRepo.existsById(dealerId);
+    }
+
+
 }

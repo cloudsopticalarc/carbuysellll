@@ -2,6 +2,7 @@ package com.spring.jwt.Interfaces;
 
 import com.spring.jwt.dto.CarDto;
 import com.spring.jwt.dto.FilterDto;
+import com.spring.jwt.entity.Status;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ICarRegister {
 
     public CarDto findById(int carId);
     List<CarDto> getCarsByDealerIdWithStatus(int dealerId, String status,int pageNo);
+
+    public List<CarDto> getDetails(int dealerId, Status carStatus, int pageNo);
 }

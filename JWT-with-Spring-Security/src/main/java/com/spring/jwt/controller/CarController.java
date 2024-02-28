@@ -2,7 +2,9 @@ package com.spring.jwt.controller;
 
 
 import com.spring.jwt.dto.*;
+import com.spring.jwt.entity.Status;
 import com.spring.jwt.exception.CarNotFoundException;
+import com.spring.jwt.exception.DealerNotFoundException;
 import com.spring.jwt.exception.PageNotFoundException;
 import com.spring.jwt.Interfaces.ICarRegister;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,32 +125,34 @@ CarController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
         }
     }
-    @GetMapping("/dealer/{dealerId}/status/{carStatus}")
-    public ResponseEntity<ResponseAllCarDto> getCarsByDealerIdAndStatus(
-            @PathVariable("dealerId") Integer dealerId,
-            @PathVariable("carStatus") String carStatus,
-            @RequestParam int pageNo
-    ) {
-        try{
+    @GetMapping("/dealer")
+    public ResponseEntity<ResponseAllCarDto> getdetails(
+            @RequestParam Integer dealerId,
+            @RequestParam String carStatus,
+            @RequestParam int pageNo) {
 
-            List<CarDto> cars = iCarRegister.getCarsByDealerIdWithStatus(dealerId, carStatus,pageNo);
+        try {
+            Status status = Status.fromString(carStatus);
+            List<CarDto> cars = iCarRegister.getDetails(dealerId, status, pageNo);
             ResponseAllCarDto responseAllCarDto = new ResponseAllCarDto("success");
             responseAllCarDto.setList(cars);
             return ResponseEntity.status(HttpStatus.OK).body(responseAllCarDto);
 
-
-        }catch (CarNotFoundException carNotFoundException){
+        } catch (CarNotFoundException carNotFoundException) {
             ResponseAllCarDto responseAllCarDto = new ResponseAllCarDto("unsuccess");
             responseAllCarDto.setException("car not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
 
-        }catch (PageNotFoundException pageNotFoundException){
+        }catch (DealerNotFoundException dealerNotFoundException) {
+            ResponseAllCarDto responseAllDealerDto = new ResponseAllCarDto("unsuccess");
+            responseAllDealerDto.setException("Dealer not found by id");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllDealerDto);
+        } catch (PageNotFoundException pageNotFoundException) {
             ResponseAllCarDto responseAllCarDto = new ResponseAllCarDto("unsuccess");
             responseAllCarDto.setException("page not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
         }
     }
-
 
 }
 
