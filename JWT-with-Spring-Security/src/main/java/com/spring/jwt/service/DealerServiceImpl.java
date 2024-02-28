@@ -49,20 +49,14 @@ public class DealerServiceImpl implements DealerService {
                     return response;
 
                 } else {
-
                     throw new DealerDeatilsNotFoundException("Dealer details not found");
                 }
             } else {
-
-
                 throw new UserNotDealerException("User is not a dealer");
             }
         } else {
-
             throw new UserNotFoundExceptions("User not found");
-
         }
-
 
     }
 
@@ -77,9 +71,9 @@ public class DealerServiceImpl implements DealerService {
         dealer.setEmail(registerDto.getEmail());
 
         User user = dealer.getUser();
-        user.setEmail(registerDto.getEmail()); // Update email in User table as well
+        user.setEmail(registerDto.getEmail());
         user.setMobileNo(registerDto.getMobileNo());
-        userRepository.save(user); // Save the updated User entity
+        userRepository.save(user);
     }
     @Override
     public List<DealerDto> getAllDealers(int pageNo) {
