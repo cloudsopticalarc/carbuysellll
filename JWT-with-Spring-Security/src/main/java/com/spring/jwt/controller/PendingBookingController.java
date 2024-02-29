@@ -61,7 +61,6 @@ public class PendingBookingController {
 
                 carRepo.save(car);
 
-                // Create a DTO for the response
                 CarDto carDto = mapToCarDto(car, dealer);
                 ResponceDto responseDto = new ResponceDto("Car booking request is pending.", carDto);
                 return ResponseEntity.ok(responseDto);

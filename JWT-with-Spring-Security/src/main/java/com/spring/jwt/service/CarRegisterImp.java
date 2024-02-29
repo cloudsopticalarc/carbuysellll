@@ -297,7 +297,6 @@ public class CarRegisterImp implements ICarRegister {
         carDto.setPowerWindowFeature(car.getPowerWindowFeature());
         carDto.setRearParkingCameraFeature(car.getRearParkingCameraFeature());
         carDto.setSafetyDescription(car.getSafetyDescription());
-        // Map other properties of the Car entity to corresponding properties of CarDto
         return carDto;
     }
     public List<CarDto> getDetails(int dealerId, Status carStatus, int pageNo) {
@@ -339,6 +338,5 @@ public class CarRegisterImp implements ICarRegister {
     private boolean dealerExists(int dealerId) {
         return dealerRepo.existsById(dealerId);
     }
-
 
 }
