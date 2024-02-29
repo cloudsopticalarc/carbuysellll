@@ -3,13 +3,13 @@ package com.spring.jwt.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.spring.jwt.Interfaces.ImageService;
 import com.spring.jwt.dto.ImageUploadDto;
 import com.spring.jwt.dto.PhotoResopnseDto;
 import com.spring.jwt.entity.CarPhoto;
 import com.spring.jwt.exception.CarNotFoundException;
 import com.spring.jwt.exception.NoImageFoundException;
 import com.spring.jwt.repository.ImageRepository;
-import com.spring.jwt.Interfaces.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

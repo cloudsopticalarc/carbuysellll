@@ -2,8 +2,10 @@ package com.spring.jwt.entity;
 
 import com.spring.jwt.dto.CarDto;
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.LinkedHashSet;

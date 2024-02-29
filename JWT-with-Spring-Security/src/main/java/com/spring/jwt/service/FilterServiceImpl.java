@@ -1,12 +1,14 @@
 package com.spring.jwt.service;
 
+import com.spring.jwt.Interfaces.FilterService;
 import com.spring.jwt.dto.CarDto;
 import com.spring.jwt.dto.FilterDto;
 import com.spring.jwt.entity.Car;
+import com.spring.jwt.entity.Status;
 import com.spring.jwt.exception.CarNotFoundException;
 import com.spring.jwt.exception.PageNotFoundException;
 import com.spring.jwt.repository.CarRepo;
-import com.spring.jwt.Interfaces.FilterService;
+import com.spring.jwt.repository.DealerRepository;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,8 @@ public class FilterServiceImpl implements FilterService {
 
     @Autowired
     private CarRepo carRepo;
+    @Autowired
+    private DealerRepository dealerRepo;
 
     @Override
     public List<CarDto> searchByFilter(FilterDto filterDto, int pageNo) {
@@ -56,12 +60,17 @@ public class FilterServiceImpl implements FilterService {
                 predicates.add(criteriaBuilder.equal(root.get("fuelType"), filterDto.getFuelType()));
             }
 
+            Predicate statusPredicate = criteriaBuilder. or (
+                    criteriaBuilder.equal(root.get("carStatus"), Status.ACTIVE),
+                    criteriaBuilder.equal(root.get("carStatus"), Status.PENDING)
+            );
+            predicates.add(statusPredicate);
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
-//        spec
+
 
         Pageable pageable = PageRequest.of(pageNo  -0, 10);
-
         Page<Car> carPage = carRepo.findAll(spec, pageable);
         if(carPage.isEmpty()){
             throw new PageNotFoundException("Page Not found");
@@ -79,7 +88,8 @@ public class FilterServiceImpl implements FilterService {
     }
     @Override
     public List<CarDto> getAllCarsWithPages(int PageNo) {
-        List<Car> listOfCar = carRepo.findAll();
+        List<Car> listOfCar = carRepo.getPendingAndActivateCar();
+        System.err.println(listOfCar.size());
         CarNotFoundException carNotFoundException;
         if((PageNo*10)>listOfCar.size()-1){
             throw new PageNotFoundException("page not found");
@@ -93,18 +103,27 @@ public class FilterServiceImpl implements FilterService {
         int pageEnd=pageStart+10;
         int diff=(listOfCar.size()) - pageStart;
         for(int counter=pageStart,i=1;counter<pageEnd;counter++,i++){
+
             if(pageStart>listOfCar.size()){break;}
 
+
+
+
+                CarDto carDto = new CarDto(listOfCar.get(counter));
+                carDto.setCarId(listOfCar.get(counter).getId());
+                listOfCarDto.add(carDto);
+
 //            System.out.println("*");
-            CarDto carDto = new CarDto(listOfCar.get(counter));
-            carDto.setCarId(listOfCar.get(counter).getId());
-            listOfCarDto.add(carDto);
+
             if(diff == i){
                 break;
             }
         }
 
 //        System.out.println(listOfCar);
+        if(listOfCarDto.isEmpty()){
+            throw new PageNotFoundException("page not found ..");
+        }
         return listOfCarDto;
     }
 

@@ -1,17 +1,21 @@
 package com.spring.jwt.service;
 
+import com.spring.jwt.Interfaces.DealerService;
 import com.spring.jwt.dto.ChangePasswordDto;
 import com.spring.jwt.dto.DealerDto;
 import com.spring.jwt.dto.RegisterDto;
+import com.spring.jwt.entity.Car;
 import com.spring.jwt.entity.Dealer;
+import com.spring.jwt.entity.Status;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.*;
+import com.spring.jwt.repository.CarRepo;
 import com.spring.jwt.repository.DealerRepository;
 import com.spring.jwt.repository.RoleRepository;
 import com.spring.jwt.repository.UserRepository;
-import com.spring.jwt.Interfaces.DealerService;
 import com.spring.jwt.utils.BaseResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +32,10 @@ public class DealerServiceImpl implements DealerService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final DealerRepository dealerRepository;
+    @Autowired
+    private DealerRepository dealerRepository;
+    @Autowired
+    private CarRepo carRepo;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -49,14 +56,20 @@ public class DealerServiceImpl implements DealerService {
                     return response;
 
                 } else {
+
                     throw new DealerDeatilsNotFoundException("Dealer details not found");
                 }
             } else {
+
+
                 throw new UserNotDealerException("User is not a dealer");
             }
         } else {
+
             throw new UserNotFoundExceptions("User not found");
+
         }
+
 
     }
 
@@ -71,9 +84,9 @@ public class DealerServiceImpl implements DealerService {
         dealer.setEmail(registerDto.getEmail());
 
         User user = dealer.getUser();
-        user.setEmail(registerDto.getEmail());
+        user.setEmail(registerDto.getEmail()); // Update email in User table as well
         user.setMobileNo(registerDto.getMobileNo());
-        userRepository.save(user);
+        userRepository.save(user); // Save the updated User entity
     }
     @Override
     public List<DealerDto> getAllDealers(int pageNo) {
@@ -214,6 +227,38 @@ public class DealerServiceImpl implements DealerService {
         return dealer.get().getId();
 
     }
+    @Override
+    public void updateStatus(Integer dealerId, Boolean status) {
+        Optional<Dealer> dealer=dealerRepository.findById(dealerId);
 
+        System.err.println(dealer.isPresent());
+//        System.out.println(dealer.get().toString());
+        if(dealer.isEmpty()){throw new DealerNotFoundException("dealer not found by id");}
+        dealer.get().setStatus(status);
+//        System.out.println(dealer.get().toString());
+        dealerRepository.save(dealer.get());
+        Optional<List<Car>> carList = carRepo.getByDealerId(dealerId);
+        if(carList.isEmpty()){
+            return;
+        }
+        else if(status == false){
+            for (int counter=0;counter<carList.get().size();counter++){
+                if(carList.get().get(counter).getCarStatus().equals(Status.ACTIVE) || carList.get().get(counter).getCarStatus().equals(Status.PENDING))
+                carList.get().get(counter).setCarStatus(Status.DEACTIVATE);
+
+            }
+            carRepo.saveAll(carList.get());
+        }else if(status == true){
+
+            for (int counter=0;counter<carList.get().size();counter++){
+                if(carList.get().get(counter).getCarStatus().equals(Status.DEACTIVATE) || carList.get().get(counter).getCarStatus().equals(Status.PENDING))
+                    carList.get().get(counter).setCarStatus(Status.ACTIVE);
+
+            }
+            carRepo.saveAll(carList.get());
+        }
+
+
+    }
 }
 

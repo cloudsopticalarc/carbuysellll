@@ -3,7 +3,10 @@ package com.spring.jwt.dto;
 
 import com.spring.jwt.entity.User;
 import com.spring.jwt.entity.Userprofile;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor

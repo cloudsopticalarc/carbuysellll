@@ -1,7 +1,9 @@
 package com.spring.jwt.Interfaces;
 
-import com.spring.jwt.dto.*;
-import com.spring.jwt.entity.Userprofile;
+import com.spring.jwt.dto.PasswordChange;
+import com.spring.jwt.dto.RegisterDto;
+import com.spring.jwt.dto.ResponseDto;
+import com.spring.jwt.dto.UserProfileDto;
 import com.spring.jwt.exception.PageNotFoundException;
 import com.spring.jwt.exception.UserNotFoundExceptions;
 import com.spring.jwt.utils.BaseResponseDTO;

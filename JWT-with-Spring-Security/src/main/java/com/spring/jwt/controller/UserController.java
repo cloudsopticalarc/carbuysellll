@@ -1,12 +1,12 @@
 package com.spring.jwt.controller;
 
+import com.spring.jwt.Interfaces.UserService;
 import com.spring.jwt.dto.PasswordChange;
 import com.spring.jwt.dto.ResponseAllUsersDto;
 import com.spring.jwt.dto.UserProfileDto;
 import com.spring.jwt.exception.InvalidPasswordException;
 import com.spring.jwt.exception.PageNotFoundException;
 import com.spring.jwt.exception.UserNotFoundExceptions;
-import com.spring.jwt.Interfaces.UserService;
 import com.spring.jwt.utils.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,6 +88,7 @@ public class UserController {
     public ResponseEntity<BaseResponseDTO> changePassword(@PathVariable int id, @RequestBody PasswordChange passwordChange){
 
         try{
+
             BaseResponseDTO result =userService.changePassword(id,passwordChange);
             return ResponseEntity.status(HttpStatus.OK).body(new BaseResponseDTO("Successful",result.getMessage()));
         }catch (UserNotFoundExceptions exception){

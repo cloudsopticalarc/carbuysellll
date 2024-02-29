@@ -1,12 +1,12 @@
 package com.spring.jwt.controller;
 
 
+import com.spring.jwt.Interfaces.ICarRegister;
 import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.Status;
 import com.spring.jwt.exception.CarNotFoundException;
 import com.spring.jwt.exception.DealerNotFoundException;
 import com.spring.jwt.exception.PageNotFoundException;
-import com.spring.jwt.Interfaces.ICarRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,7 +74,6 @@ CarController {
     }
 
 
-
     @DeleteMapping("/removeCar")
     public ResponseEntity<ResponseDto> deleteCar(@RequestParam int carId){
         try {
@@ -94,9 +93,7 @@ CarController {
         try {
             ResponseSingleCarDto responseSingleCarDto = new ResponseSingleCarDto("success");
 
-
             CarDto car = iCarRegister.findById(car_id);
-
 
             responseSingleCarDto.setObject(car);
             return ResponseEntity.status(HttpStatus.OK).body(responseSingleCarDto);

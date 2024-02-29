@@ -1,10 +1,10 @@
 package com.spring.jwt.entity;
 
 
-
 import com.spring.jwt.dto.DealerDto;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
