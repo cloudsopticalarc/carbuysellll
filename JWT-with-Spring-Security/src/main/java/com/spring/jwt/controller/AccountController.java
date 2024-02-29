@@ -1,9 +1,9 @@
 package com.spring.jwt.controller;
 
+import com.spring.jwt.Interfaces.UserService;
 import com.spring.jwt.dto.RegisterDto;
 import com.spring.jwt.exception.BaseException;
 import com.spring.jwt.exception.UserAlreadyExistException;
-import com.spring.jwt.Interfaces.UserService;
 import com.spring.jwt.utils.BaseResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
 
     private final UserService userService;
-
 
     @PostMapping("/register")
     public ResponseEntity<BaseResponseDTO> register(@RequestBody RegisterDto registerDto){

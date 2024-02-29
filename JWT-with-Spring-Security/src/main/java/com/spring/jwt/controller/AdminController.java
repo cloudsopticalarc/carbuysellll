@@ -11,12 +11,8 @@ import java.security.Principal;
 @RequestMapping("/admin")
 public class AdminController {
 
-
-
     @GetMapping("/index")
     public ResponseEntity<String> index(Principal principal){
         return ResponseEntity.ok("Welcome to admin page : " + principal.getName());
-
-
     }
 }

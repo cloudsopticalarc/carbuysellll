@@ -1,7 +1,6 @@
 package com.spring.jwt.dto;
 
 
-import com.spring.jwt.entity.Userprofile;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,6 +1,7 @@
 package com.spring.jwt.service;
 
 
+import com.spring.jwt.Interfaces.ICarRegister;
 import com.spring.jwt.dto.CarDto;
 import com.spring.jwt.dto.FilterDto;
 import com.spring.jwt.entity.Car;
@@ -12,7 +13,6 @@ import com.spring.jwt.exception.PageNotFoundException;
 import com.spring.jwt.repository.CarRepo;
 import com.spring.jwt.repository.DealerRepository;
 import com.spring.jwt.repository.PhotoRepo;
-import com.spring.jwt.Interfaces.ICarRegister;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -110,8 +110,7 @@ public class CarRegisterImp implements ICarRegister {
 
     @Override
     public List<CarDto> getAllCarsWithPages(int PageNo) {
-        List<Car> listOfCar = carRepo.findAll();
-        CarNotFoundException carNotFoundException;
+        List<Car> listOfCar = carRepo.getPendingAndActivateCar();
         if((PageNo*10)>listOfCar.size()-1){
             throw new PageNotFoundException("page not found");
 
@@ -126,10 +125,12 @@ public class CarRegisterImp implements ICarRegister {
         for(int counter=pageStart,i=1;counter<pageEnd;counter++,i++){
             if(pageStart>listOfCar.size()){break;}
 
-//            System.out.println("*");
-            CarDto carDto = new CarDto(listOfCar.get(counter));
-            carDto.setCarId(listOfCar.get(counter).getId());
-            listOfCarDto.add(carDto);
+
+                CarDto carDto = new CarDto(listOfCar.get(counter));
+                carDto.setCarId(listOfCar.get(counter).getId());
+                listOfCarDto.add(carDto);
+
+
             if(diff == i){
                 break;
             }
@@ -154,27 +155,14 @@ public class CarRegisterImp implements ICarRegister {
         carRepo.deleteById(id);
         return "car details deleted";
     }
-//    @Override
-//    public Optional<List<Car>> FindByArea(String area) {
-//        Optional<List<Car>> cars = carRepo.FindByArea(area);
-//        if (cars.isPresent()) {
-//
-//            try {
-//
-//                return cars;
-//
-//            } catch (Exception r)
-//            {
-//                System.err.println(r);
-//            }
-//        } else {
-//            System.err.println("car is not present");
-//
-//        }
-////        System.out.println("11");
-////        return carRepo.FindByArea(area);
-//        return cars;
-//    }
+
+
+    @Override
+    public CarDto getCarById(int carId) {
+        Optional<Car> car = carRepo.findById(carId);
+        return car.map(CarDto::new).orElse(null);
+    }
+
     @Override
     public List<CarDto> searchByFilter(FilterDto filterDto, int pageNo) {
         Specification<Car> spec = (root, query, criteriaBuilder) -> {
@@ -237,68 +225,6 @@ public class CarRegisterImp implements ICarRegister {
         carDto.setCarId(carId);
         return carDto;
     }
-    @Override
-    public List<CarDto> getCarsByDealerIdWithStatus(int dealerId, String status,int pageNo) {
-        List<Car> listOfCar = carRepo.findByDealerIdAndCarStatus(dealerId, status);
-
-        if((pageNo*10)>listOfCar.size()-1){
-            throw new PageNotFoundException("page not found");
-
-        }
-        if(listOfCar.size()<=0){throw new CarNotFoundException("car not found",HttpStatus.NOT_FOUND);}
-//        System.out.println("list of de"+listOfCar.size());
-        List<CarDto> listOfCarDto = new ArrayList<>();
-
-        int pageStart=pageNo*10;
-        int pageEnd=pageStart+10;
-        int diff=(listOfCar.size()) - pageStart;
-        for(int counter=pageStart,i=1;counter<pageEnd;counter++,i++){
-            if(pageStart>listOfCar.size()){break;}
-
-//            System.out.println("*");
-            CarDto carDto = new CarDto(listOfCar.get(counter));
-            carDto.setCarId(listOfCar.get(counter).getId());
-            listOfCarDto.add(carDto);
-            if(diff == i){
-                break;
-            }
-        }
-
-//        System.out.println(listOfCar);
-        return listOfCarDto;
-
-    }
-
-
-    private CarDto convertToDto(Car car) {
-        CarDto carDto = new CarDto();
-        carDto.setCarId(car.getId());
-        carDto.setDealer_id(car.getDealerId());
-        carDto.setBrand(car.getBrand());
-        carDto.setModel(car.getModel());
-        carDto.setYear(car.getYear());
-        carDto.setArea(car.getArea());
-        carDto.setBodyType(car.getBodyType());
-        carDto.setCarInsurance(car.getCarInsurance());
-        carDto.setCarStatus(car.getCarStatus());
-        carDto.setCity(car.getCity());
-        carDto.setColor(car.getColor());
-        carDto.setDescription(car.getDescription());
-        carDto.setFuelType(car.getFuelType());
-        carDto.setKmDriven(car.getKmDriven());
-        carDto.setNoOfWheels(car.getNoOfWheels());
-        carDto.setOwnerSerial(car.getOwnerSerial());
-        carDto.setPrice(car.getPrice());
-        carDto.setRegistration(car.getRegistration());
-        carDto.setTransmission(car.getTransmission());
-        carDto.setTyre(car.getTyre());
-        carDto.setAcFeature(car.getAcFeature());
-        carDto.setMusicFeature(car.getMusicFeature());
-        carDto.setPowerWindowFeature(car.getPowerWindowFeature());
-        carDto.setRearParkingCameraFeature(car.getRearParkingCameraFeature());
-        carDto.setSafetyDescription(car.getSafetyDescription());
-        return carDto;
-    }
     public List<CarDto> getDetails(int dealerId, Status carStatus, int pageNo) {
         if (!dealerExists(dealerId)) {
             throw new DealerNotFoundException("Dealer not found by id");
@@ -339,4 +265,39 @@ public class CarRegisterImp implements ICarRegister {
         return dealerRepo.existsById(dealerId);
     }
 
+    @Override
+    public String editCarDetails(CarDto carDto) {
+        return null;
+    }
+
+    private CarDto convertToDto(Car car) {
+        CarDto carDto = new CarDto();
+        carDto.setCarId(car.getId());
+        carDto.setDealer_id(car.getDealerId());
+        carDto.setBrand(car.getBrand());
+        carDto.setModel(car.getModel());
+        carDto.setYear(car.getYear());
+        carDto.setArea(car.getArea());
+        carDto.setBodyType(car.getBodyType());
+        carDto.setCarInsurance(car.getCarInsurance());
+        carDto.setCarStatus(car.getCarStatus());
+        carDto.setCity(car.getCity());
+        carDto.setColor(car.getColor());
+        carDto.setDescription(car.getDescription());
+        carDto.setFuelType(car.getFuelType());
+        carDto.setKmDriven(car.getKmDriven());
+        carDto.setNoOfWheels(car.getNoOfWheels());
+        carDto.setOwnerSerial(car.getOwnerSerial());
+        carDto.setPrice(car.getPrice());
+        carDto.setRegistration(car.getRegistration());
+        carDto.setTransmission(car.getTransmission());
+        carDto.setTyre(car.getTyre());
+        carDto.setAcFeature(car.getAcFeature());
+        carDto.setMusicFeature(car.getMusicFeature());
+        carDto.setPowerWindowFeature(car.getPowerWindowFeature());
+        carDto.setRearParkingCameraFeature(car.getRearParkingCameraFeature());
+        carDto.setSafetyDescription(car.getSafetyDescription());
+        // Map other properties of the Car entity to corresponding properties of CarDto
+        return carDto;
+    }
 }

@@ -83,13 +83,13 @@ package com.spring.jwt.controller.file;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.spring.jwt.Interfaces.CarPhotoService;
+import com.spring.jwt.Interfaces.ImageService;
 import com.spring.jwt.dto.ImageUploadDto;
 import com.spring.jwt.entity.Car;
 import com.spring.jwt.exception.CarNotFoundException;
 import com.spring.jwt.exception.NoImageFoundException;
 import com.spring.jwt.repository.CarRepo;
-import com.spring.jwt.Interfaces.CarPhotoService;
-import com.spring.jwt.Interfaces.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

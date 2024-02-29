@@ -1,7 +1,6 @@
-package com.spring.jwt.dto;
+package com.spring.jwt.dto.BookingDtos;
 
 import com.spring.jwt.entity.PendingBooking;
-import com.spring.jwt.entity.Status;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -9,34 +8,25 @@ import java.time.LocalDate;
 @Data
 public class PendingBookingDTO {
 
-    public static final String STATUS_PENDING = "Pending";
-    public static final String STATUS_ACTIVE = "Active";
-    public static final String STATUS_SOLD = "Sold";
 
-    private int id;
+    private int pendingBookingId;
     private LocalDate date;
     private int price;
-    private int askingPrice;
-    private Status status;
-    private Integer carId;
     private Integer dealerId;
+    private Integer carId;
     private Integer userId;
-
-
+    private String status;
+    private int askingPrice;
     public PendingBookingDTO() {
-
     }
-
     public PendingBookingDTO(PendingBooking pendingBooking) {
+        this.pendingBookingId = pendingBooking.getId();
+        this.carId = pendingBooking.getCarCar().getId();
         this.date = pendingBooking.getDate();
         this.price = pendingBooking.getPrice();
-        this.askingPrice = pendingBooking.getAskingPrice();
-        this.status = pendingBooking.getStatus();
-        this.carId = pendingBooking.getId();
-        this.dealerId = pendingBooking.getDealerId();
         this.userId = pendingBooking.getUserId();
-
+        this.status = String.valueOf(pendingBooking.getStatus());
+        this.askingPrice = pendingBooking.getAskingPrice();
+        this.dealerId = pendingBooking.getDealerId();
     }
-
 }
-

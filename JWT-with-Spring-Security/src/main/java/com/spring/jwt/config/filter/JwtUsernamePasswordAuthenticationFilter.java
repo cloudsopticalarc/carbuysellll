@@ -2,7 +2,6 @@ package com.spring.jwt.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.jwt.dto.LoginRequest;
-import org.springframework.security.core.GrantedAuthority;
 import com.spring.jwt.jwt.JwtConfig;
 import com.spring.jwt.jwt.JwtService;
 import com.spring.jwt.security.UserDetailsCustom;
@@ -18,11 +17,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

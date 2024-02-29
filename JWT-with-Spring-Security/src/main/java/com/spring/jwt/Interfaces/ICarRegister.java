@@ -12,13 +12,15 @@ public interface ICarRegister {
     public List<CarDto> getAllCarsWithPages(int PageNo);
     public String deleteCar(int id);
 
+    CarDto getCarById(int carId);
 
 //    public Optional<List<Car>> FindByArea(String area);
 
     public List<CarDto> searchByFilter(FilterDto filterDto, int pageNo);
 
     public CarDto findById(int carId);
-    List<CarDto> getCarsByDealerIdWithStatus(int dealerId, String status,int pageNo);
+
+    public String editCarDetails(CarDto carDto);
 
     public List<CarDto> getDetails(int dealerId, Status carStatus, int pageNo);
 }
