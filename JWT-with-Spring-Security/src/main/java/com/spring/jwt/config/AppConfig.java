@@ -12,8 +12,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,6 +32,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class AppConfig {
 
     @Autowired
@@ -65,7 +69,9 @@ public class AppConfig {
     }
 
     @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
 
         builder.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
@@ -101,8 +107,8 @@ public class AppConfig {
                 .requestMatchers("/dealerDocument/**").hasAnyAuthority("ADMIN", "DEALER")
                 .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/dealer/**").hasAnyAuthority("DEALER", "ADMIN")
-                .requestMatchers("/car/**").hasAnyAuthority("DEALER", "ADMIN")
-
+                .requestMatchers("/car/**").permitAll()
+                .requestMatchers("/carVerify/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)

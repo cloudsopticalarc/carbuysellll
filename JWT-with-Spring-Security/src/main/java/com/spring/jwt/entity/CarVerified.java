@@ -1,5 +1,6 @@
 package com.spring.jwt.entity;
 
+import com.spring.jwt.dto.CarVerifyDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,8 +21,8 @@ public class CarVerified {
    @Column(name = "CarVerifiedId", nullable = false)
    private int CarVerifiedId;
 
-   @Column(name = "id")
-   private int id;
+   @Column(name = "carId")
+   private int carId;
 
    @Column(name = "partName")
    private  String partName;
@@ -29,5 +30,13 @@ public class CarVerified {
    @Column(name = "PartCondition")
    private  String PartCondition;
 
+   @Column(name="userId")
+   private Integer userId;
 
+   public CarVerified(CarVerifyDto carVerifyDto) {
+      this.userId=carVerifyDto.getUserId();
+      this.carId = carVerifyDto.getCarId();
+      this.partName = carVerifyDto.getPartName();
+      this.PartCondition = carVerifyDto.getPartCondition();
+   }
 }
