@@ -99,6 +99,7 @@ public class AppConfig {
                         "/swagger-ui.html"
                 ).permitAll()
                 .requestMatchers("/cars/**").permitAll()
+                .requestMatchers("/BeadingCarController/**").permitAll()
                 .requestMatchers("/booking/**").hasAnyAuthority("USER", "ADMIN","DEALER")
                 .requestMatchers("/userProfilePhoto/**").permitAll()
                 .requestMatchers("/confirmBooking/**").permitAll()
