@@ -10,6 +10,7 @@ import com.spring.jwt.exception.PageNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -92,9 +93,7 @@ CarController {
     public ResponseEntity<ResponseSingleCarDto> findByArea(@RequestParam int car_id) {
         try {
             ResponseSingleCarDto responseSingleCarDto = new ResponseSingleCarDto("success");
-
             CarDto car = iCarRegister.findById(car_id);
-
             responseSingleCarDto.setObject(car);
             return ResponseEntity.status(HttpStatus.OK).body(responseSingleCarDto);
         }catch (CarNotFoundException carNotFoundException){
@@ -122,6 +121,7 @@ CarController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
         }
     }
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @GetMapping("/dealer")
     public ResponseEntity<ResponseAllCarDto> getdetails(
             @RequestParam Integer dealerId,

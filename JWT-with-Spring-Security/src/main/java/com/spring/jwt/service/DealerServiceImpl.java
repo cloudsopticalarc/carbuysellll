@@ -31,6 +31,7 @@ import java.util.Optional;
 public class DealerServiceImpl implements DealerService {
 
     private final UserRepository userRepository;
+
     private final RoleRepository roleRepository;
     @Autowired
     private DealerRepository dealerRepository;
@@ -69,7 +70,6 @@ public class DealerServiceImpl implements DealerService {
             throw new UserNotFoundExceptions("User not found");
 
         }
-
 
     }
 
