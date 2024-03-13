@@ -16,6 +16,8 @@ public interface BeadingCarService {
 
    public BeadingCARDto getBCarById(Integer beadingCarId);
 
+   public List<BeadingCARDto>getByUserId(int UserId);
+
 
 
 

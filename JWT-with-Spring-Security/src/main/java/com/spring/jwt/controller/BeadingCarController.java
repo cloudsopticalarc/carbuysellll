@@ -73,6 +73,17 @@ public class BeadingCarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto("error", "An error occurred while editing beading car details"));
         }
     }
+    @GetMapping("/getByUserId/{userId}")
+    public ResponseEntity<?> getBeadingCarsByUserId(@PathVariable("userId") int userId) {
+        try {
+            List<BeadingCARDto> beadingCars = beadingCarService.getByUserId(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(beadingCars);
+        } catch (BeadingCarNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("error", "No Beading cars found for the user"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto("error", "An error occurred while retrieving beading cars for the user"));
+        }
+    }
 
 
 }
