@@ -96,18 +96,10 @@ public class Car {
     private LocalDate date;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "dealer_vendor_id", nullable = false)
-//    private Dealer dealerVendor;
        @Column(name = "dealer_id")
        private int dealerId;
     private long carPhotoId;
 
-//    private Carphoto carphotoCarPhoto;
-@ManyToMany
-@JoinTable(name = "dealer_bidding", joinColumns = @JoinColumn(name = "dealer_id"),
-        inverseJoinColumns = @JoinColumn(name = "bidding_id"))
-private Set<Bidding> biddings = new LinkedHashSet<>();
 
 
     @OneToMany(mappedBy = "carCar")
