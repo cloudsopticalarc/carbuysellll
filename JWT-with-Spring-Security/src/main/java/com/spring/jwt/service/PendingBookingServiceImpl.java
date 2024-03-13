@@ -38,7 +38,6 @@ public class PendingBookingServiceImpl implements PendingBookingService {
     @Autowired
     private DealerRepository dealerRepository;
 
-
     @Override
 
     public void deleteBooking(int id) {

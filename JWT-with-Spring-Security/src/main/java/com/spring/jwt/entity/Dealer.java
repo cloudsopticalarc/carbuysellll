@@ -54,13 +54,6 @@ public class Dealer {
     private User user;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bidding_bidding_id")
-    private Bidding biddingBidding;
-
-    @OneToMany(mappedBy = "dealerVendor")
-    private Set<Biddingbuy> biddingbuys = new LinkedHashSet<>();
-
 //    @OneToMany(mappedBy = "dealerVendor")
 //    private Set<Car> cars = new LinkedHashSet<>();
 

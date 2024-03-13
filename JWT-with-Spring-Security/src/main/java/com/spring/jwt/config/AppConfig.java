@@ -9,6 +9,7 @@ import com.spring.jwt.jwt.JwtService;
 import com.spring.jwt.security.UserDetailsServiceCustom;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,10 @@ public class AppConfig {
     public BCryptPasswordEncoder passwordEncoder(){
 
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Bean
@@ -110,6 +115,7 @@ public class AppConfig {
                 .requestMatchers("/dealer/**").hasAnyAuthority("DEALER", "ADMIN")
                 .requestMatchers("/car/**").permitAll()
                 .requestMatchers("/carVerify/**").permitAll()
+                .requestMatchers("/Bidding/v1/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)
