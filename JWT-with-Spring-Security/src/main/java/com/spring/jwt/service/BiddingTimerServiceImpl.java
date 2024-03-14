@@ -5,7 +5,6 @@ import com.spring.jwt.dto.BiddingTimerRequestDTO;
 import com.spring.jwt.entity.BiddingTimerRequest;
 import com.spring.jwt.repository.BiddingTImerRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;

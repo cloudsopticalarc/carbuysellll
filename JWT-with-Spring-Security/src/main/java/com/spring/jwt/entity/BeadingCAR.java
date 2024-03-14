@@ -94,7 +94,7 @@ public class BeadingCAR {
     private LocalDate date;
 
     @Column(name = "UserId")
-    private int UserId;
+    private int userId;
 
     public BeadingCAR() {
     }
@@ -125,6 +125,6 @@ public class BeadingCAR {
         this.tyre = beadingCARDto.getTyre();
         this.year = beadingCARDto.getYear();
         this.date = beadingCARDto.getDate();
-        this.UserId = beadingCARDto.getUserId();
+        this.userId = beadingCARDto.getUserId();
     }
 }
