@@ -84,7 +84,7 @@ public class BeadingCARDto {
     private LocalDate date;
 
 
-    private int UserId;
+    private int userId;
 
 
     public BeadingCARDto() {
@@ -116,6 +116,6 @@ public class BeadingCARDto {
         this.tyre = beadingCAR.getTyre();
         this.year = beadingCAR.getYear();
         this.date = beadingCAR.getDate();
-        this.UserId = beadingCAR.getUserId();
+        this.userId = beadingCAR.getUserId();
     }
 }

@@ -4,6 +4,7 @@ import com.spring.jwt.Interfaces.BeadingCarService;
 import com.spring.jwt.dto.BeadingCAR.BeadingCARDto;
 import com.spring.jwt.dto.ResponseDto;
 import com.spring.jwt.exception.BeadingCarNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("BeadingCarController")
+@RequiredArgsConstructor
+@RequestMapping("/BeadingCarController")
 public class BeadingCarController {
 
-    @Autowired
-    private BeadingCarService beadingCarService;
+    private final BeadingCarService beadingCarService;
 
     @PostMapping(value = "/carregister")
     public ResponseEntity<ResponseDto> carRegistration(@RequestBody BeadingCARDto beadingCARDto) {
@@ -84,6 +85,4 @@ public class BeadingCarController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto("error", "An error occurred while retrieving beading cars for the user"));
         }
     }
-
-
 }
