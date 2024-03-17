@@ -24,6 +24,8 @@ public class BidCars {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    private Integer userId;
+
    @Column(name = "closingTime")
    private LocalDateTime closingTime;
 

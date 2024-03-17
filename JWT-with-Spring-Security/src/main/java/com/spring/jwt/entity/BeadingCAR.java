@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class BeadingCAR {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_id", nullable = false)
+    @Column(name = "beadingCarId", nullable = false)
     private Integer beadingCarId;
 
     @Column(name = "ac_feature")

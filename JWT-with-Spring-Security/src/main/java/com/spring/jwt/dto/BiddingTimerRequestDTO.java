@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class BiddingTimerRequestDTO {
     private Integer BiddingTimerId;
 
-    private Integer carId;
+    private Integer beadingCarId;
 
     private Integer userId;
 
