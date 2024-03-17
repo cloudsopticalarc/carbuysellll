@@ -116,6 +116,7 @@ public class AppConfig {
                 .requestMatchers("/car/**").permitAll()
                 .requestMatchers("/carVerify/**").permitAll()
                 .requestMatchers("/Bidding/v1/**").permitAll()
+                .requestMatchers("/Bid/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .authenticationManager(manager)

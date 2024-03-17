@@ -18,12 +18,13 @@ public class BidCars {
    @Column(name = "beadingCardId")
    private Integer beadingCarId;
 
-   @Column(name="time")
-   private LocalDateTime Time;
-
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name= "basePrice")
+    private Integer basePrice;
+
+    @Column(name = "userId")
     private Integer userId;
 
    @Column(name = "closingTime")

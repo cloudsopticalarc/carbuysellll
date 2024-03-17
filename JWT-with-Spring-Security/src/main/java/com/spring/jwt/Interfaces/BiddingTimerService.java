@@ -9,7 +9,7 @@ public interface BiddingTimerService {
 
     public BiddingTimerRequestDTO startTimer (BiddingTimerRequestDTO biddingTimerRequest);
 
-    void sendNotification (String recipient, String message);
+//    void sendNotification (String recipient, String message);
 
     void sendBulkEmails(List<String> recipients, String message);
 
