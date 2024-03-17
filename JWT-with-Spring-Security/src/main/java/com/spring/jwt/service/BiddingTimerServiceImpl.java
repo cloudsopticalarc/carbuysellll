@@ -53,7 +53,7 @@ public class BiddingTimerServiceImpl implements BiddingTimerService {
 
     public void sendBulkEmails(List<String> recipients, String message) {
         try {
-            int batchSize = 16;
+            int batchSize = 50;
             MimeMessage[] messages = new MimeMessage[batchSize];
             int messageIndex = 0;
 
