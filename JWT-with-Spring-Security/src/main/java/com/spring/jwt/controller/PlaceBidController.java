@@ -26,4 +26,5 @@ public class PlaceBidController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bid amount smaller than highest bid");
             }
         }
+
 }
