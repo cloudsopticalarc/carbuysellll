@@ -15,8 +15,8 @@ public class BiddingTimerRequest {
     @Column(name="BiddingTimerId")
     private Integer BiddingTimerId;
 
-    @Column(name="carId")
-    private Integer carId;
+    @Column(name="beadingCarId")
+    private Integer beadingCarId;
 
     @Column(name="userId")
     private Integer userId;

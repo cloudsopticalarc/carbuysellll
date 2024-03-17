@@ -192,7 +192,6 @@ public class PendingBookingController {
             AllPendingBookingResponseDTO allPendingBookingResponseDTO = new AllPendingBookingResponseDTO("success");
             allPendingBookingResponseDTO.setList(listOfPendingBooking);
 
-
             return ResponseEntity.status(HttpStatus.OK).body(allPendingBookingResponseDTO);
         } catch (BookingNotFoundException bookingNotFoundException) {
             ResponseAllPendingBookingDto responseAllPendingBookingDto = new ResponseAllPendingBookingDto("unsuccess");

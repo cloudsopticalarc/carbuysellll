@@ -121,7 +121,7 @@ CarController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseAllCarDto);
         }
     }
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','DEALER')")
     @GetMapping("/dealer")
     public ResponseEntity<ResponseAllCarDto> getdetails(
             @RequestParam Integer dealerId,

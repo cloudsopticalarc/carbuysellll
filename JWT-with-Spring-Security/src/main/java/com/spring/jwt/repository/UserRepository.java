@@ -1,11 +1,14 @@
 package com.spring.jwt.repository;
 
+import com.spring.jwt.entity.Role;
 import com.spring.jwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -20,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     public void DeleteById(int user_id);
 
     User findByResetPasswordToken(String token);
+
+    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = ?1")
+    List<User> findByRoleName(String roleName);
 }
