@@ -7,12 +7,19 @@ import com.spring.jwt.dto.BidDetailsDTO;
 import com.spring.jwt.dto.ResDtos;
 import com.spring.jwt.entity.BeadingCAR;
 import com.spring.jwt.entity.BidCars;
+import com.spring.jwt.entity.User;
+import com.spring.jwt.exception.BeadingCarNotFoundException;
+import com.spring.jwt.exception.UserNotFoundExceptions;
 import com.spring.jwt.repository.BeadingCarRepo;
 import com.spring.jwt.repository.BidCarsRepo;
+import com.spring.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +31,8 @@ public class BidCarsServiceImpl implements BidCarsService {
     private final BeadingCarRepo beadingCarRepo;
 
     private final BidCarsRepo bidCarsRepo;
+
+    private final UserRepository userRepository;
 
     @Override
     public BidCarsDTO createBidding(BidCarsDTO bidCarsDTO) {
@@ -80,6 +89,25 @@ public class BidCarsServiceImpl implements BidCarsService {
         }else {
             throw new RuntimeException("Bid car or Beading car not found");
         }
+    }
+
+    @Override
+    public List<BidCarsDTO> getByUserId(Integer userId) {
+        User user = userRepository.findByUserId(userId);
+        if (user == null) {
+            throw new UserNotFoundExceptions("User with ID: " + userId + " not found", HttpStatus.NOT_FOUND);
+        }
+
+        List<BeadingCAR> beadingCars = beadingCarRepo.findByUserId(userId);
+        if (beadingCars.isEmpty()) {
+            throw new BeadingCarNotFoundException("No Beading cars found for user with ID: " + userId, HttpStatus.NOT_FOUND);
+        }
+
+        List<BidCarsDTO> dtos = new ArrayList<>();
+        for (BeadingCAR beadingCAR : beadingCars) {
+            dtos.add(new BidCarsDTO(beadingCAR));
+        }
+        return dtos;
     }
 
 

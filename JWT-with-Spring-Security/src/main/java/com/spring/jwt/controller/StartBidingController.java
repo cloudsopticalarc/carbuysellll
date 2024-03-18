@@ -7,6 +7,8 @@ import com.spring.jwt.dto.*;
 import com.spring.jwt.entity.BeadingCAR;
 import com.spring.jwt.entity.BidCars;
 import com.spring.jwt.entity.User;
+import com.spring.jwt.exception.BeadingCarNotFoundException;
+import com.spring.jwt.exception.UserNotFoundExceptions;
 import com.spring.jwt.repository.BeadingCarRepo;
 import com.spring.jwt.repository.BidCarsRepo;
 import com.spring.jwt.repository.UserRepository;
@@ -110,5 +112,26 @@ public class StartBidingController {
          BidDetailsDTO bidDetailsDTO = bidCarsService.getbyBidId(bidCarId, beadingCarId);
         return ResponseEntity.status(HttpStatus.OK).body(new ResDtos("Success", bidDetailsDTO));
      }
+
+
+    @GetMapping("/beadCarByUserId")
+    public ResponseEntity<ResponseAllBidCarsDTO> getByUserId(@RequestParam Integer userId) {
+        ResponseAllBidCarsDTO response = new ResponseAllBidCarsDTO("success");
+        try {
+            List<BidCarsDTO> bidCarsDTOs = bidCarsService.getByUserId(userId);
+            response.setBookings(bidCarsDTOs);
+            return ResponseEntity.ok(response);
+        } catch (UserNotFoundExceptions ex) {
+            response.setStatus("error");
+            response.setMessage(ex.getMessage());
+            response.setException(ex.getClass().getSimpleName());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        } catch (BeadingCarNotFoundException ex) {
+            response.setStatus("error");
+            response.setMessage(ex.getMessage());
+            response.setException(ex.getClass().getSimpleName());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 
 }
