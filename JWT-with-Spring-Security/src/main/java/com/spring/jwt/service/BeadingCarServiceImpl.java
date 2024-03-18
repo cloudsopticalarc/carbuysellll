@@ -84,6 +84,7 @@ public class BeadingCarServiceImpl implements BeadingCarService {
 
     @Override
     public List<BeadingCARDto> getByUserId(int UserId) {
+
         List<BeadingCAR> beadingCars = beadingCarRepo.findByUserId(UserId);
         if (beadingCars.isEmpty()) {
             throw new BeadingCarNotFoundException("No Beading cars found for user with id: " + UserId, HttpStatus.NOT_FOUND);
