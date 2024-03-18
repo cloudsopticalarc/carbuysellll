@@ -11,11 +11,11 @@ public class BidCarsDTO {
 
     private Integer beadingCarId;
 
-    private LocalDateTime Time;
-
     private LocalDateTime closingTime;
 
     private LocalDateTime createdAt;
+
+    private Integer basePrice;
 
     private Integer userId;
 }

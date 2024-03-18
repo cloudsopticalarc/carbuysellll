@@ -49,7 +49,6 @@ public class BidCarsServiceImpl implements BidCarsService {
 
             bidDetailsDTO.setBidCarId(bidCar.getBidCarId());
             bidDetailsDTO.setBeadingCarId(beadingCar.getBeadingCarId());
-            bidDetailsDTO.setTime(bidCar.getTime());
             bidDetailsDTO.setClosingTime(bidCar.getClosingTime());
             bidDetailsDTO.setCreatedAt(bidCar.getCreatedAt());
             bidDetailsDTO.setMusicFeature(beadingCar.getMusicFeature());

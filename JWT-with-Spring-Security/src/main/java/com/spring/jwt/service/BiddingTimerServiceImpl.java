@@ -41,15 +41,15 @@ public class BiddingTimerServiceImpl implements BiddingTimerService {
         return biddingTimerRequestDTO;
     }
 
-    @Override
-    public void sendNotification(String recipient, String message) {
-
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(recipient);
-        mailMessage.setSubject("Bidding Timer Notification");
-        mailMessage.setText(message);
-        javaMailSender.send(mailMessage);
-    }
+//    @Override
+//    public void sendNotification(String recipient, String message) {
+//
+//        SimpleMailMessage mailMessage = new SimpleMailMessage();
+//        mailMessage.setTo(recipient);
+//        mailMessage.setSubject("Bidding Timer Notification");
+//        mailMessage.setText(message);
+//        javaMailSender.send(mailMessage);
+//    }
 
     public void sendBulkEmails(List<String> recipients, String message) {
         try {
