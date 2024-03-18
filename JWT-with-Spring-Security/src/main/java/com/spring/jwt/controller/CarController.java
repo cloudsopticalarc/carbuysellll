@@ -123,7 +123,7 @@ CarController {
     }
     @PreAuthorize("hasAnyAuthority('ADMIN','DEALER')")
     @GetMapping("/dealer")
-    public ResponseEntity<ResponseAllCarDto> getdetails(
+    public ResponseEntity<ResponseAllCarDto> getDetails(
             @RequestParam Integer dealerId,
             @RequestParam String carStatus,
             @RequestParam int pageNo) {
