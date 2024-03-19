@@ -4,10 +4,7 @@ import com.spring.jwt.Interfaces.PlacedBidService;
 import com.spring.jwt.dto.BeedingDtos.PlacedBidDTO;
 import com.spring.jwt.dto.ResponseAllPlacedBidDTO;
 import com.spring.jwt.dto.ResponseDto;
-import com.spring.jwt.exception.BidAmountLessException;
-import com.spring.jwt.exception.BidNotFoundExceptions;
-import com.spring.jwt.exception.PlacedBidNotFoundExceptions;
-import com.spring.jwt.exception.UserNotFoundExceptions;
+import com.spring.jwt.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +25,7 @@ public class PlaceBidController {
             try {
                 String result = placedBidService.placeBid(placedBidDTO, bidCarId);
                 return (ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("success", result)));
-            } catch (BidAmountLessException e) {
+            } catch (BidAmountLessException | BidForSelfAuctionException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bid amount smaller than highest bid");
             }
         }
