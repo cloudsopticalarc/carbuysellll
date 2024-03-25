@@ -33,10 +33,9 @@ public class PendingBookingServiceImpl implements PendingBookingService {
     private final PendingBookingRepository pendingBookingRepository;
     private final CarRepo carRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private DealerRepository dealerRepository;
+    private final UserRepository userRepository;
+
+    private final DealerRepository dealerRepository;
 
     @Override
 
