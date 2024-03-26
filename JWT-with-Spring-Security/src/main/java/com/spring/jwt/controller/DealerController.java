@@ -115,8 +115,10 @@ public class DealerController {
         catch (InvalidOldPasswordException invalidOldPasswordException){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","Invalid Old Password "));
 
+
         }catch (UserNotDealerException userNotDealerException){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","User Not a Dealer"));
+
 
         }catch (UserNotFoundExceptions userNotFoundExceptions){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","User Not Found"));
