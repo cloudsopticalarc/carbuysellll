@@ -97,9 +97,9 @@ public class DealerController {
        }
     }
 
-    @PutMapping("/changePassword/{userId}")
+    @PutMapping("/changePassword/{dealerId}")
     public ResponseEntity<ResponseDto> changePassword(
-            @PathVariable("userId") Integer dealerId,
+            @PathVariable("dealerId") Integer dealerId,
             @RequestBody ChangePasswordDto changePasswordDto
     ) {
         try{
