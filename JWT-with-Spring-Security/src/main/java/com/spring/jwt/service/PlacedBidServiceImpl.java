@@ -31,6 +31,7 @@ public class PlacedBidServiceImpl implements PlacedBidService {
 
       private final UserRepository userRepository;
 
+
     @Override
     public String placeBid(PlacedBidDTO placedBidDTO, Integer bidCarId) throws BidAmountLessException {
         Optional<BidCars> byId = bidCarsRepo.findById(bidCarId);

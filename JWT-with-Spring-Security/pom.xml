@@ -69,8 +69,11 @@
 			<artifactId>spring-security-oauth2-core</artifactId>
 			<version>5.5.1</version>
 		</dependency>
-
-
+<!--             Web-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.razorpay</groupId>
