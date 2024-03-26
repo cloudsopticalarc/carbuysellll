@@ -4,10 +4,7 @@ import com.spring.jwt.Interfaces.PlacedBidService;
 import com.spring.jwt.dto.BeedingDtos.PlacedBidDTO;
 import com.spring.jwt.entity.BidCars;
 import com.spring.jwt.entity.PlacedBid;
-import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BidAmountLessException;
-import com.spring.jwt.exception.BidNotFoundExceptions;
-import com.spring.jwt.exception.PlacedBidNotFoundExceptions;
 import com.spring.jwt.exception.UserNotFoundExceptions;
 import com.spring.jwt.repository.BidCarsRepo;
 import com.spring.jwt.repository.PlacedBidRepo;
@@ -15,10 +12,8 @@ import com.spring.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
