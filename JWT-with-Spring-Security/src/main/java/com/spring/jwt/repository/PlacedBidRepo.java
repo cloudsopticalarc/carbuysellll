@@ -11,7 +11,8 @@ public interface PlacedBidRepo extends JpaRepository<PlacedBid, Integer> {
     List<PlacedBid> findByUserId(Integer userId);
 
     List<PlacedBid> findByBidCarId(Integer bidCarId);
-    @Query("SELECT pb.amount FROM PlacedBid pb WHERE pb.bidCarId = :bidCarId ORDER BY pb.amount DESC")
+
+    @Query("SELECT pb FROM PlacedBid pb WHERE pb.bidCarId = :bidCarId ORDER BY pb.amount DESC")
     List<PlacedBid> findTop3ByBidCarIdOrderByAmountDesc(Integer bidCarId);
 
 }

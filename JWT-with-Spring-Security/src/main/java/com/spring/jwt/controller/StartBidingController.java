@@ -1,16 +1,11 @@
 package com.spring.jwt.controller;
 
-
 import com.spring.jwt.Interfaces.BidCarsService;
 import com.spring.jwt.Interfaces.BiddingTimerService;
 import com.spring.jwt.dto.*;
-import com.spring.jwt.entity.BeadingCAR;
-import com.spring.jwt.entity.BidCars;
 import com.spring.jwt.entity.User;
 import com.spring.jwt.exception.BeadingCarNotFoundException;
 import com.spring.jwt.exception.UserNotFoundExceptions;
-import com.spring.jwt.repository.BeadingCarRepo;
-import com.spring.jwt.repository.BidCarsRepo;
 import com.spring.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +34,7 @@ public class StartBidingController {
     private final UserRepository userRepository;
 
     private final BidCarsService bidCarsService;
+
 
     private final JdbcTemplate jdbcTemplate;
     private final Logger logger = LoggerFactory.getLogger(StartBidingController.class);

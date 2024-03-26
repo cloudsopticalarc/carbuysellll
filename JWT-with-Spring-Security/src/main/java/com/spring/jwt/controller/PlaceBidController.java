@@ -54,7 +54,7 @@ public class PlaceBidController {
         }
     }
 
-    @GetMapping("/{placedBidId}")
+    @GetMapping("/getPlacedBid/{placedBidId}")
     public ResponseEntity<ResponseAllPlacedBidDTO> getPlacedBidById(@PathVariable Integer placedBidId) {
         try {
             PlacedBidDTO placedBid = placedBidService.getById(placedBidId);
@@ -66,7 +66,7 @@ public class PlaceBidController {
         }
     }
 
-    @GetMapping("/topthree/{bidCarId}")
+    @GetMapping("/topThree/{bidCarId}")
     public ResponseEntity<ResponseAllPlacedBidDTO> getTopThreeBids(@PathVariable Integer bidCarId) {
         try {
             List<PlacedBidDTO> topThreeBids = placedBidService.getTopThree(bidCarId);
