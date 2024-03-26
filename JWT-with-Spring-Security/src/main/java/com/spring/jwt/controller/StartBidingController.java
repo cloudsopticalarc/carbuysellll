@@ -37,6 +37,7 @@ public class StartBidingController {
 
 
     private final JdbcTemplate jdbcTemplate;
+
     private final Logger logger = LoggerFactory.getLogger(StartBidingController.class);
 
     @PostMapping("/SetTime")

@@ -184,16 +184,19 @@ public class DealerServiceImpl implements DealerService {
 
 
     @Override
-    public BaseResponseDTO changePassword(Integer userId, ChangePasswordDto changePasswordDto) {
+    public BaseResponseDTO changePassword(Integer dealerId, ChangePasswordDto changePasswordDto) {
         BaseResponseDTO response = new BaseResponseDTO();
-        Optional<User> userOptional = userRepository.findById(userId);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+        // Find the dealer by dealerId
+        Dealer dealer = userRepository.findDealerById(dealerId);
 
-            if (user.getRoles().stream().anyMatch(role -> role.getName().equals("DEALER"))) {
+        if (dealer != null) {
+            User user = dealer.getUser(); // Get the associated user
+
+            if (user != null && user.getRoles().stream().anyMatch(role -> role.getName().equals("DEALER"))) {
                 if (passwordEncoder.matches(changePasswordDto.getOldPassword(), user.getPassword())) {
                     if (changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmNewPassword())) {
+                        // Update the password
                         user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
                         userRepository.save(user);
                         response.setCode(String.valueOf(HttpStatus.OK.value()));
@@ -202,21 +205,18 @@ public class DealerServiceImpl implements DealerService {
                         throw new NewAndOldPasswordDoseNotMatchException("New password and confirm password do not match");
                     }
                 } else {
-
                     throw new InvalidOldPasswordException("Invalid old password");
-
                 }
             } else {
-
                 throw new UserNotDealerException("User is not a dealer");
             }
         } else {
-            throw new UserNotFoundExceptions("User not found");
-
+            throw new DealerNotFoundException("Dealer not found");
         }
 
         return response;
     }
+
 
     @Override
     public int getDealerIdByEmail(String email) {
