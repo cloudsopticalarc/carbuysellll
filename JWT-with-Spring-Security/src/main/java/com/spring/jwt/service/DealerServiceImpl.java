@@ -181,32 +181,33 @@ public class DealerServiceImpl implements DealerService {
 
     }
 
-
-
     @Override
     public BaseResponseDTO changePassword(Integer dealerId, ChangePasswordDto changePasswordDto) {
         BaseResponseDTO response = new BaseResponseDTO();
 
-        // Find the dealer by dealerId
         Dealer dealer = userRepository.findDealerById(dealerId);
 
         if (dealer != null) {
-            User user = dealer.getUser(); // Get the associated user
+            User user = dealer.getUser();
 
             if (user != null && user.getRoles().stream().anyMatch(role -> role.getName().equals("DEALER"))) {
-                if (passwordEncoder.matches(changePasswordDto.getOldPassword(), user.getPassword())) {
-                    if (changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmNewPassword())) {
-                        // Update the password
-                        user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
-                        userRepository.save(user);
-                        response.setCode(String.valueOf(HttpStatus.OK.value()));
-                        response.setMessage("Password changed successfully");
-                    } else {
-                        throw new NewAndOldPasswordDoseNotMatchException("New password and confirm password do not match");
-                    }
-                } else {
+
+                if (!passwordEncoder.matches(changePasswordDto.getOldPassword(), user.getPassword())) {
                     throw new InvalidOldPasswordException("Invalid old password");
                 }
+
+                if (changePasswordDto.getOldPassword().equals(changePasswordDto.getNewPassword())) {
+                    throw new OldNewPasswordMustBeDifferentException("New password must be different from the old password");
+                }
+
+                if (!changePasswordDto.getNewPassword().equals(changePasswordDto.getConfirmNewPassword())) {
+                    throw new NewAndOldPasswordDoseNotMatchException("New password and confirm password do not match");
+                }
+
+                user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+                userRepository.save(user);
+                response.setCode(String.valueOf(HttpStatus.OK.value()));
+                response.setMessage("Password changed successfully");
             } else {
                 throw new UserNotDealerException("User is not a dealer");
             }
@@ -216,6 +217,7 @@ public class DealerServiceImpl implements DealerService {
 
         return response;
     }
+
 
 
     @Override

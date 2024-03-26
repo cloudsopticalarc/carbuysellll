@@ -107,16 +107,19 @@ public class DealerController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("success",baseResponseDTO.getMessage()));
 
         }catch (NewAndOldPasswordDoseNotMatchException newAndOldPasswordDoseNotMatchException){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","New And Old Password Dose Not Match Exception"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","New And Old Password Dose Not Match"));
 
-        }catch (InvalidOldPasswordException invalidOldPasswordException){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","Invalid Old Password Exception"));
+        }catch(OldNewPasswordMustBeDifferentException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess",e.getMessage()));
+        }
+        catch (InvalidOldPasswordException invalidOldPasswordException){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","Invalid Old Password "));
 
         }catch (UserNotDealerException userNotDealerException){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","User Not Dealer Exception"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","User Not a Dealer"));
 
         }catch (UserNotFoundExceptions userNotFoundExceptions){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","User Not Found Exception"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","User Not Found"));
 
         }
     }
