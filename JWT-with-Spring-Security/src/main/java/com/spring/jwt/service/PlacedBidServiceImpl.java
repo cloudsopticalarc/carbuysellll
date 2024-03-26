@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class PlacedBidServiceImpl implements PlacedBidService {
       private final PlacedBidRepo placedBidRepo;
 
-      private final BidCarsRepo bidCarsRepo;
+      private final  BidCarsRepo bidCarsRepo;
 
       private final ModelMapper modelMapper;
 
@@ -78,6 +78,7 @@ public class PlacedBidServiceImpl implements PlacedBidService {
         Optional<PlacedBid> optionalPlacedBid = placedBidRepo.findById(placedBidId);
         if (optionalPlacedBid.isPresent()) {
             PlacedBid placedBid = optionalPlacedBid.get();
+            System.out.println(placedBid);
             return convertToDto(placedBid);
         } else {
             throw new PlacedBidNotFoundExceptions("PlacedBid not found with ID: " + placedBidId);
