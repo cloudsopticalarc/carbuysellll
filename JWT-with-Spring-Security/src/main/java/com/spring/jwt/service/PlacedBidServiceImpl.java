@@ -44,4 +44,17 @@ public class PlacedBidServiceImpl implements PlacedBidService {
         return "Bid Placed Successfully";
     }
 
+
+    public PlacedBid convertToEntity(PlacedBidDTO placedBidDTO){
+        PlacedBid toEntity = modelMapper.map(placedBidDTO, PlacedBid.class);
+        return toEntity;
+    }
+
+    public PlacedBidDTO convertToDto(PlacedBid placedBid){
+        PlacedBidDTO toDto = modelMapper.map(placedBid, PlacedBidDTO.class);
+        return toDto;
+    }
+
+
+
 }
