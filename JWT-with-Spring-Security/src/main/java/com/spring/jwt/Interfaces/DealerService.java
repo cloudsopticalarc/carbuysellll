@@ -15,7 +15,7 @@ public interface DealerService {
 
     BaseResponseDTO deleteDealer(Integer dealerId);
 
-    BaseResponseDTO changePassword(Integer userId, ChangePasswordDto changePasswordDto);
+    BaseResponseDTO changePassword(Integer dealerId, ChangePasswordDto changePasswordDto);
 
     public int getDealerIdByEmail(String email);
     public void updateStatus(Integer dealerId, Boolean status);

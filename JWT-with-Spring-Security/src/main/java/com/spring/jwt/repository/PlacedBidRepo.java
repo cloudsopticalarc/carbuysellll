@@ -1,11 +1,10 @@
 package com.spring.jwt.repository;
 
-import java.util.List;
-
+import com.spring.jwt.entity.PlacedBid;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.spring.jwt.entity.PlacedBid;
+import java.util.List;
 
 public interface PlacedBidRepo extends JpaRepository<PlacedBid, Integer> {
 
@@ -13,6 +12,7 @@ public interface PlacedBidRepo extends JpaRepository<PlacedBid, Integer> {
 
     List<PlacedBid> findByBidCarId(Integer bidCarId);
 
-    @Query("SELECT pb FROM PlacedBid pb WHERE pb.bidCarId = :bidCarId ORDER BY pb.amount DESC LIMIT 3")
+    @Query("SELECT pb FROM PlacedBid pb WHERE pb.bidCarId = :bidCarId ORDER BY pb.amount DESC")
     List<PlacedBid> findTop3ByBidCarIdOrderByAmountDesc(Integer bidCarId);
+
 }

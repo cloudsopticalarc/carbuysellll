@@ -99,11 +99,11 @@ public class DealerController {
 
     @PutMapping("/changePassword/{userId}")
     public ResponseEntity<ResponseDto> changePassword(
-            @PathVariable("userId") Integer userId,
+            @PathVariable("userId") Integer dealerId,
             @RequestBody ChangePasswordDto changePasswordDto
     ) {
         try{
-            BaseResponseDTO baseResponseDTO =dealerService.changePassword(userId, changePasswordDto);
+            BaseResponseDTO baseResponseDTO =dealerService.changePassword(dealerId, changePasswordDto);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("success",baseResponseDTO.getMessage()));
 
         }catch (NewAndOldPasswordDoseNotMatchException newAndOldPasswordDoseNotMatchException){

@@ -1,5 +1,6 @@
 package com.spring.jwt.repository;
 
+import com.spring.jwt.entity.Dealer;
 import com.spring.jwt.entity.Role;
 import com.spring.jwt.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = ?1")
     List<User> findByRoleName(String roleName);
+
+    @Query("SELECT u.dealer FROM User u WHERE u.dealer.id = :dealerId")
+    Dealer findDealerById(Integer dealerId);
 }
