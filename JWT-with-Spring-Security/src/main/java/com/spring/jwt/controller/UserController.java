@@ -97,7 +97,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BaseResponseDTO("Unsuccessfully","InvalidPasswordException"));
         }
     }
-
-
-
 }
