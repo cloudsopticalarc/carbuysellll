@@ -130,7 +130,6 @@ public class DealerController {
 
         try
         {
-
             int id=dealerService.getDealerIdByEmail(email);
             return ResponseEntity.status(HttpStatus.OK).body(id);
         }catch (EmailNotExistException e){

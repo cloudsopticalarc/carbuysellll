@@ -10,7 +10,7 @@ public interface ICarRegister {
     public String AddCarDetails(CarDto carDto);
     public String editCarDetails(CarDto carDto,int id);
     public List<CarDto> getAllCarsWithPages(int PageNo);
-    public String deleteCar(int id);
+    public String deleteCar(int carId, int DealerId);
 
     CarDto getCarById(int carId);
 

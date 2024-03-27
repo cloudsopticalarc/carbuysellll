@@ -141,19 +141,31 @@ public class CarRegisterImp implements ICarRegister {
     }
 
     @Override
-    public String deleteCar(int id) {
-        Car carDetail = carRepo.findById(id).orElseThrow(()->new CarNotFoundException("car not found",HttpStatus.NOT_FOUND));
-        Long carDocumentPhotoId=carDetail.getCarPhotoId();
+    public String deleteCar(int carId, int dealerId) {
+        Optional<Car> carOptional = carRepo.findById(carId);
+        if (carOptional.isPresent()) {
+            Car carDetail = carOptional.get();
+            int cardealerId = carDetail.getDealerId();
+            Dealer dealer = dealerRepo.findById(cardealerId).orElseThrow(() -> new DealerNotFoundException("Dealer not found for car"));
 
-        if(carDocumentPhotoId == 0){
-            carRepo.deleteById(id);
-            return "car details deleted";
+
+            if (dealerId == dealerId) {
+                Long carDocumentPhotoId = carDetail.getCarPhotoId();
+                if (carDocumentPhotoId == 0) {
+                    carRepo.deleteById(carId);
+                    return "Car details deleted";
+                }
+                carDetail.setCarPhotoId(0);
+                photoRepo.deleteById(carDocumentPhotoId);
+
+                carRepo.deleteById(carId);
+                return "Car details deleted";
+            } else {
+                throw new RuntimeException("You are not authorized to delete this car");
+            }
+        } else {
+            throw new CarNotFoundException("Car not found", HttpStatus.NOT_FOUND);
         }
-        carDetail.setCarPhotoId(0);
-        photoRepo.deleteById(carDocumentPhotoId);
-
-        carRepo.deleteById(id);
-        return "car details deleted";
     }
 
 

@@ -58,7 +58,7 @@ public class PlaceBidController {
     }
 
 
-    @GetMapping("/topthree/{bidCarId}")
+    @GetMapping("/topThree/{bidCarId}")
     public ResponseEntity<ResponseAllPlacedBidDTO> getTopThreeBids(@PathVariable Integer bidCarId) {
         try {
             List<PlacedBidDTO> topThreeBids = placedBidService.getTopThree(bidCarId);

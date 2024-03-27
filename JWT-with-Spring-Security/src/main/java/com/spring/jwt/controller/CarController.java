@@ -76,10 +76,10 @@ CarController {
 
 
     @DeleteMapping("/removeCar")
-    public ResponseEntity<ResponseDto> deleteCar(@RequestParam int carId){
+    public ResponseEntity<ResponseDto> deleteCar(@RequestParam int carId, @RequestParam int dealerId){
         try {
 
-            String result =iCarRegister.deleteCar(carId);
+            String result =iCarRegister.deleteCar(carId,dealerId);
 
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto("success",result));
         }
