@@ -51,6 +51,7 @@ public class BeadingCarController {
         }
     }
 
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<ResponseDto> deleteBeadingCar(@PathVariable("id") Integer beadingCarId) {
         try {
