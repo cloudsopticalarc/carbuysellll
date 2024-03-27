@@ -85,6 +85,8 @@ CarController {
         }
         catch (CarNotFoundException carNotFoundException){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess","car not found"));
+        }catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDto("unsuccess",e.getMessage()));
 
         }
     }

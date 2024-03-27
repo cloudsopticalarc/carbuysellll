@@ -146,18 +146,11 @@ public class CarRegisterImp implements ICarRegister {
         if (carOptional.isPresent()) {
             Car carDetail = carOptional.get();
             int cardealerId = carDetail.getDealerId();
-            Dealer dealer = dealerRepo.findById(cardealerId).orElseThrow(() -> new DealerNotFoundException("Dealer not found for car"));
-
-
-            if (dealerId == dealerId) {
+            if (cardealerId == dealerId) {
                 Long carDocumentPhotoId = carDetail.getCarPhotoId();
-                if (carDocumentPhotoId == 0) {
-                    carRepo.deleteById(carId);
-                    return "Car details deleted";
+                if (carDocumentPhotoId != null && carDocumentPhotoId != 0) {
+                    photoRepo.deleteById(carDocumentPhotoId);
                 }
-                carDetail.setCarPhotoId(0);
-                photoRepo.deleteById(carDocumentPhotoId);
-
                 carRepo.deleteById(carId);
                 return "Car details deleted";
             } else {
@@ -309,7 +302,6 @@ public class CarRegisterImp implements ICarRegister {
         carDto.setPowerWindowFeature(car.getPowerWindowFeature());
         carDto.setRearParkingCameraFeature(car.getRearParkingCameraFeature());
         carDto.setSafetyDescription(car.getSafetyDescription());
-        // Map other properties of the Car entity to corresponding properties of CarDto
         return carDto;
     }
 }
