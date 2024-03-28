@@ -40,14 +40,14 @@ public class AppConfig {
     private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
-    JwtConfig jwtConfig;
-
-
-    @Autowired
     private JwtService jwtService;
 
+    // Removed the @Autowired annotation from the JwtConfig field
+    private JwtConfig jwtConfig = new JwtConfig();
+
+    // Removed the @Bean annotation from the original jwtConfig() method
     @Bean
-    public JwtConfig jwtConfig(){
+    public JwtConfig jwtConfig() {
         return new JwtConfig();
     }
 
