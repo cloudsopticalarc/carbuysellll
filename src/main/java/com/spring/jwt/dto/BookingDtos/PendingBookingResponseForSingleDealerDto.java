@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PendingBookingResponseForSingleDealerDto {
     private String message;
-    private PendingBookingDTO pendingBookingDTO;
+    private PendingBookingDto pendingBookingDTO;
     private String exception;
 
     public PendingBookingResponseForSingleDealerDto(String message) {

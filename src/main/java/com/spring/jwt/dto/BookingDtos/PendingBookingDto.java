@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class PendingBookingDTO {
+public class PendingBookingDto {
 
 
     private int pendingBookingId;
@@ -17,9 +17,9 @@ public class PendingBookingDTO {
     private Integer userId;
     private String status;
     private int askingPrice;
-    public PendingBookingDTO() {
+    public PendingBookingDto() {
     }
-    public PendingBookingDTO(PendingBooking pendingBooking) {
+    public PendingBookingDto(PendingBooking pendingBooking) {
         this.pendingBookingId = pendingBooking.getId();
         this.carId = pendingBooking.getCarCar().getId();
         this.date = pendingBooking.getDate();

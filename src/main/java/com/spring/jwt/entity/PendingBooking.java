@@ -2,6 +2,7 @@ package com.spring.jwt.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.jwt.dto.BookingDtos.PendingBookingDto;
 import com.spring.jwt.dto.PendingBookingDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,12 +46,12 @@ public class PendingBooking {
     @JsonIgnore
     private Car carCar;
 
-    public PendingBooking(PendingBookingDTO pendingBookingDTO) {
+    public PendingBooking(PendingBookingDto pendingBookingDTO) {
         this.date = pendingBookingDTO.getDate();
         this.price = pendingBookingDTO.getPrice();
         this.dealerId = pendingBookingDTO.getDealerId();
         this.userId = pendingBookingDTO.getUserId();
-        this.status = pendingBookingDTO.getStatus();
+        this.status = Status.valueOf(pendingBookingDTO.getStatus());
         this.askingPrice = pendingBookingDTO.getAskingPrice();
     }
 

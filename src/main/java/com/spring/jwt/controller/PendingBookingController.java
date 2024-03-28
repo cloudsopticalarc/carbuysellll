@@ -2,11 +2,9 @@ package com.spring.jwt.controller;
 
 
 import com.spring.jwt.Interfaces.PendingBookingService;
+import com.spring.jwt.dto.*;
 import com.spring.jwt.dto.BookingDtos.*;
-import com.spring.jwt.dto.CarDto;
-import com.spring.jwt.dto.DealerDto;
-import com.spring.jwt.dto.PendingBookingDTO;
-import com.spring.jwt.dto.ResponseAllPendingBookingDto;
+import com.spring.jwt.dto.BookingDtos.PendingBookingDto;
 import com.spring.jwt.entity.Car;
 import com.spring.jwt.entity.Dealer;
 import com.spring.jwt.exception.*;
@@ -18,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,7 +31,7 @@ public class PendingBookingController {
     private PendingBookingService pendingBookingService;
 
     @PostMapping("/request")
-    public ResponseEntity<?> requestCarBooking(@RequestBody PendingBookingDTO pendingBookingDTO) {
+    public ResponseEntity<?> requestCarBooking(@RequestBody PendingBookingDto pendingBookingDTO) {
         try{
 
             PendingBookingRequestDto pendingBooking = pendingBookingService.savePendingBooking(pendingBookingDTO);
@@ -100,7 +99,7 @@ public class PendingBookingController {
     @GetMapping("/getAllpendingBookings")
     public ResponseEntity<ResponseAllPendingBookingDto> getAllpendingBookings(@RequestParam int pageNo) {
         try {
-            List<PendingBookingDTO> listOfPendingBooking = pendingBookingService.getAllPendingBookingWithPage(pageNo);
+            List<PendingBookingDto> listOfPendingBooking = pendingBookingService.getAllPendingBookingWithPage(pageNo);
             ResponseAllPendingBookingDto responseAllPendingBookingDto = new ResponseAllPendingBookingDto("success");
             responseAllPendingBookingDto.setList(listOfPendingBooking);
             return ResponseEntity.status(HttpStatus.OK).body(responseAllPendingBookingDto);
@@ -123,7 +122,7 @@ public class PendingBookingController {
     @GetMapping("/getByUserId")
     public ResponseEntity<?> getByUserId(@RequestParam int pageNo,@RequestParam int userId) {
         try {
-            List<com.spring.jwt.dto.BookingDtos.PendingBookingDTO> listOfPendingBooking = pendingBookingService.getAllPendingBookingByUserId(pageNo,userId);
+            List<PendingBookingDto> listOfPendingBooking = pendingBookingService.getAllPendingBookingByUserId(pageNo,userId);
 
             AllPendingBookingResponseDTO allPendingBookingResponseDTO = new AllPendingBookingResponseDTO("success");
             allPendingBookingResponseDTO.setList(listOfPendingBooking);
@@ -148,7 +147,7 @@ public class PendingBookingController {
     @GetMapping("/getPendingBookingDetailsById")
     public ResponseEntity<?> getBookingDetailsById(@RequestParam int bookingId) {
         try {
-            com.spring.jwt.dto.BookingDtos.PendingBookingDTO pendingBookingDTO = pendingBookingService.getPendingBookingId(bookingId);
+            PendingBookingDto pendingBookingDTO = pendingBookingService.getPendingBookingId(bookingId);
             PendingBookingResponseForSingleDealerDto pendingBookingResponseForSingleDealerDto = new PendingBookingResponseForSingleDealerDto("success");
             pendingBookingResponseForSingleDealerDto.setPendingBookingDTO(pendingBookingDTO);
             return ResponseEntity.status(HttpStatus.OK).body(pendingBookingResponseForSingleDealerDto);
@@ -162,7 +161,7 @@ public class PendingBookingController {
     @GetMapping("/getPendingBookingDetailsByDealerID")
     public ResponseEntity<?> getBookingDetailsByDealerId(@RequestParam int pageNo,@RequestParam int dealerId) {
         try {
-            List<com.spring.jwt.dto.BookingDtos.PendingBookingDTO> listOfPendingBooking = pendingBookingService.getPendingBookingsByDealerId(pageNo,dealerId);
+            List<PendingBookingDto> listOfPendingBooking = pendingBookingService.getPendingBookingsByDealerId(pageNo,dealerId);
 
             AllPendingBookingResponseDTO allPendingBookingResponseDTO = new AllPendingBookingResponseDTO("success");
             allPendingBookingResponseDTO.setList(listOfPendingBooking);
@@ -184,13 +183,18 @@ public class PendingBookingController {
         }
     }
     @GetMapping("/getPendingBookingDetailsByCarID")
-    public ResponseEntity<?> getBookingDetailsByCarId(@RequestParam int pageNo,@RequestParam int CarId) {
+    public ResponseEntity<?> getBookingDetailsByCarId(@RequestParam Integer pageNo,@RequestParam Integer CarId) {
         try {
 
-            List<com.spring.jwt.dto.BookingDtos.PendingBookingDTO> listOfPendingBooking = pendingBookingService.getPendingBookingsByCarId(pageNo,CarId);
+            Object listOfPendingBooking = pendingBookingService.getPendingBookingsByCarId(pageNo,CarId);
+            List<PendingBookingDto> list = (ArrayList) listOfPendingBooking;
+            Integer totalPages = list.size()/10;
+            if ((totalPages*10)+1 == list.size()){
+                totalPages = totalPages+1;
+            }
 
-            AllPendingBookingResponseDTO allPendingBookingResponseDTO = new AllPendingBookingResponseDTO("success");
-            allPendingBookingResponseDTO.setList(listOfPendingBooking);
+            ResponceDtos allPendingBookingResponseDTO = new ResponceDtos("success",listOfPendingBooking);
+            allPendingBookingResponseDTO.setTotalPages(totalPages);
 
             return ResponseEntity.status(HttpStatus.OK).body(allPendingBookingResponseDTO);
         } catch (BookingNotFoundException bookingNotFoundException) {

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AllPendingBookingResponseDTO {
     private String message;
-    private List<PendingBookingDTO> list;
+    private List<PendingBookingDto> list;
     private String exception;
 
     public AllPendingBookingResponseDTO(String message){
