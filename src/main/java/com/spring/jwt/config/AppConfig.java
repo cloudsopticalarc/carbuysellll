@@ -43,7 +43,7 @@ public class AppConfig {
     @Autowired
     JwtConfig jwtConfig;
 
-//    @Autowired
+    @Autowired
     private JwtService jwtService;
 
     @Bean
