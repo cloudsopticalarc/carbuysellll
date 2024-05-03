@@ -39,7 +39,9 @@ public class AppConfig {
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
 
-    private JwtConfig jwtConfig = new JwtConfig();
+    @Autowired
+    JwtConfig jwtConfig;
+
 
     @Autowired
     private JwtService jwtService;
@@ -48,9 +50,7 @@ public class AppConfig {
     public JwtConfig jwtConfig(){
         return new JwtConfig();
     }
-//    public JwtService jwtService(){
-//        return new JwtServiceImpl();
-//    }
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -154,8 +154,3 @@ public class AppConfig {
 
 
 }
-
-
-
-
-

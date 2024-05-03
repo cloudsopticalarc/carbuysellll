@@ -22,10 +22,6 @@ public class JwtConfig {
     private String secret;
 
     public JwtConfig() {
-        this.url = "/jwt/login";
-        this.header = "Authorization";
-        this.prefix = "Bearer";
-        this.expiration = 10*180;
-        this.secret = "3979244226452948404D6251655468576D5A7134743777217A25432A462D4A61";
+        System.out.println("1***********************************************************************************");
     }
 }
