@@ -6,6 +6,7 @@ import com.spring.jwt.config.filter.JwtUsernamePasswordAuthenticationFilter;
 import com.spring.jwt.exception.CustomAccessDeniedHandler;
 import com.spring.jwt.jwt.JwtConfig;
 import com.spring.jwt.jwt.JwtService;
+import com.spring.jwt.jwt.impl.JwtServiceImpl;
 import com.spring.jwt.security.UserDetailsServiceCustom;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,15 +43,16 @@ public class AppConfig {
     @Autowired
     JwtConfig jwtConfig;
 
-
-    @Autowired
+//    @Autowired
     private JwtService jwtService;
 
     @Bean
     public JwtConfig jwtConfig(){
         return new JwtConfig();
     }
-
+//    public JwtService jwtService(){
+//        return new JwtServiceImpl();
+//    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
