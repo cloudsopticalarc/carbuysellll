@@ -36,14 +36,13 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Lazy
 public class AppConfig {
 
     @Autowired
     private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
-    JwtConfig jwtConfig;
+    public JwtConfig jwtConfig;
 
     @Autowired
     private JwtService jwtService;
