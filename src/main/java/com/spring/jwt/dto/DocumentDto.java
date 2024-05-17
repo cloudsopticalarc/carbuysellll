@@ -10,5 +10,6 @@ public class DocumentDto {
     private String documentLink;
 
     private Integer userId;
+    private Integer carId;
 
 }

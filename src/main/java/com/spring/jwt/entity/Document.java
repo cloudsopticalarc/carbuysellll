@@ -27,6 +27,9 @@ public class Document {
     @Column(name = "user_userId", nullable = false)
     private Integer userId;
 
+    @Column(name = "carId", nullable = false)
+    private Integer carId;
+
     public Document() {
     }
 
@@ -34,5 +37,6 @@ public class Document {
         this.documentType = documentDto.getDocumentType();
         this.documentLink = documentDto.getDocumentLink();
         this.userId = documentDto.getUserId();
+        this.carId =documentDto.getCarId();
     }
 }
