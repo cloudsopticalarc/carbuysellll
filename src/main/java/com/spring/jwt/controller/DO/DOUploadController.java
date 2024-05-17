@@ -38,7 +38,7 @@ public class DOUploadController {
 
 
     @PostMapping("/add")
-        public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file, @RequestParam String documentType, @RequestParam Integer userId) throws InvalidKeyException, NoSuchAlgorithmException {
+        public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file, @RequestParam String documentType, @RequestParam Integer userId,@RequestParam Integer carId) throws InvalidKeyException, NoSuchAlgorithmException {
         try {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             Path filePath = Paths.get(uploadDir, fileName);
@@ -90,6 +90,7 @@ public class DOUploadController {
 //                System.out.println(jsonArray.toString());
                 DocumentDto documentDto = new DocumentDto();
                 documentDto.setUserId(userId);
+                documentDto.setCarId(carId);
 
                 documentDto.setDocumentType(documentType);
 

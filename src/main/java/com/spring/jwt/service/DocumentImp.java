@@ -23,10 +23,8 @@ public class DocumentImp implements IDocument {
 
     @Override
     public String addDocument(DocumentDto documentDto) {
-        Optional<User> userDetails = userRepository.findById(documentDto.getUserId());
-        if (userDetails.isEmpty()) {
-            throw new RuntimeException("user not found by id ");
-        }
+        User userDetails = userRepository.findById(documentDto.getUserId()).orElseThrow(()->new RuntimeException("user not found by id"));
+
         Document document = new Document(documentDto);
         documentRepo.save(document);
         return "Document uploaded successfully";
