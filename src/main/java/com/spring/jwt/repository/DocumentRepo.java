@@ -13,4 +13,6 @@ public interface DocumentRepo extends JpaRepository<Document,Integer> {
     public List<Document> findByDocumentTypeAndUserID(Integer userId, String documentType);
     @Query("SELECT jfq FROM Document jfq WHERE jfq.userId = :userId")
     public List<Document> findByUserId(Integer userId);
+
+    List<Document> findByCarId(Integer carId);
 }

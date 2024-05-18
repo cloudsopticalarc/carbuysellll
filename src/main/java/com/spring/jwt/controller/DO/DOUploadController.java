@@ -144,5 +144,31 @@ public class DOUploadController {
 
         }
     }
+    @DeleteMapping("/delete")
+    private ResponseEntity<?> deleteCar(@RequestParam Integer carId) {
+        try {
+            Object documents =iDocument.delete(carId);
+
+            return ResponseEntity.status(HttpStatus.OK).body(documents);
+        } catch (Exception e) {
+            System.err.println(e);
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", String.valueOf(e)));
+
+        }
+    }
+    @GetMapping("/getByCarID")
+    private ResponseEntity<?> getByCarID(@RequestParam Integer carId) {
+        try {
+            Object documents =iDocument.getByCarID(carId);
+            ResponceDto responceDto = new ResponceDto("success",documents);
+            return ResponseEntity.status(HttpStatus.OK).body(responceDto);
+        } catch (Exception e) {
+            System.err.println(e);
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponceDto("unsuccess", String.valueOf(e)));
+
+        }
+    }
 
 }

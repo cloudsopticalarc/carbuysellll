@@ -13,4 +13,7 @@ public interface IDocument {
 
     List<Document> getByUserId(Integer userId);
 
+    Object delete(Integer carId);
+
+    Object getByCarID(Integer carId);
 }
