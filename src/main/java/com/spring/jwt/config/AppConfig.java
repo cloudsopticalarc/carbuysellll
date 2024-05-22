@@ -35,7 +35,7 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Import(JwtConfigConfig.class)
+@Import(JwtServiceConfig.class)
 public class AppConfig {
 
     @Autowired
