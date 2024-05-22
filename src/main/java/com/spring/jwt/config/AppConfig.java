@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,6 +35,7 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@Import(JwtConfigConfig.class)
 public class AppConfig {
 
     @Autowired
@@ -45,11 +47,6 @@ public class AppConfig {
 
     @Autowired
     private JwtService jwtService;
-
-    @Bean
-    public JwtConfig jwtConfig(){
-        return new JwtConfig();
-    }
 
 
     @Bean
